@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: Flash-Food
+  jpa:
+    database: MYSQL
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+  datasource:
+    platform: mysql
+    driver-class-name: com.mysql.jdbc.Driver
+    url: spring.datasource.url=jdbc:mysql://localhost:3306/testdb
+    username: teste
+    password: teste
+
+server:
+  servlet:
+    context-path: /teste
+  port: 8080
