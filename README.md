@@ -1,2 +1,19 @@
-# Back
-Api for mobile app
+# Flash Food (Back)
+
+Essa repositório contem a api que front irá consumir 
+
+## Tecnologias 
+
+- Spring Boot 
+- Kotlin
+- Maven
+
+### Ambiente para deploy 
+
+- Heroku
+
+
+## Ferramentas 
+
+- [Jira](https://narbas.atlassian.net/jira/software/projects/FF/boards/1)
+
