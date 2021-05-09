@@ -1,6 +1,6 @@
 # Flash Food (Back)
 
-Essa repositório contem a api que front irá consumir 
+Esse repositório contem a api que front irá consumir 
 
 ## Tecnologias 
 
@@ -13,7 +13,7 @@ Essa repositório contem a api que front irá consumir
 - Heroku
 
 
-## Ferramentas 
+### Ferramentas 
 
 - [Jira](https://narbas.atlassian.net/jira/software/projects/FF/boards/1)
 
