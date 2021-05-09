@@ -1,19 +1,28 @@
 spring:
   application:
     name: Flash-Food
-  jpa:
-    database: MYSQL
-    hibernate:
-      ddl-auto: none
-    show-sql: true
+
   datasource:
-    platform: mysql
-    driver-class-name: com.mysql.jdbc.Driver
-    url: spring.datasource.url=jdbc:mysql://localhost:3306/testdb
-    username: teste
-    password: teste
+    hikari:
+      driver-class-name: ${driverClassName}
+      username: ${userName}
+      password: ${password}
+      jdbc-url: ${jdbcUrl}
+      connection-timeout: ${connectionTimeOut}
+      idle-timeout: ${idleTimeOut}
+      max-lifetime: ${maxLifeTime}
+      minimum-idle: ${minimumIdle}
+      maximum-pool-size: ${maximumPoolSize}
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: ${hibernateDialect}
+    show-sql: true
 
 server:
   servlet:
-    context-path: /teste
+    context-path: /flash-food
   port: 8080
