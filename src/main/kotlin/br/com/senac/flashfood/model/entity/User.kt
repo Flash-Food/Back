@@ -3,10 +3,7 @@ package br.com.senac.flashfood.model.entity
 import lombok.AllArgsConstructor
 import org.hibernate.annotations.GenericGenerator
 import java.util.*
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.Id
-import javax.persistence.Table
+import javax.persistence.*
 
 
 @Entity
@@ -17,8 +14,10 @@ data class User (
         @GeneratedValue(generator = "uuid")
         @GenericGenerator(name = "uuid", strategy = "uuid2")
         var id          : UUID,
+        @Column(unique = true)
         var name        : String,
         var email       : String,
+        @Column(unique = true)
         var cpf         : String,
         var phoneNumber : String,
         var password    : String

@@ -26,3 +26,6 @@ server:
   servlet:
     context-path: /flash-food
   port: 8080
+
+jwt:
+  secret: ${secret}

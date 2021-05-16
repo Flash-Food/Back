@@ -1,6 +1,8 @@
 package br.com.senac.flashfood.controller.impl
 
 import br.com.senac.flashfood.controller.UserController
+import br.com.senac.flashfood.model.dto.user.UserFindRequestDTO
+import br.com.senac.flashfood.model.dto.user.UserFindResponseDTO
 import br.com.senac.flashfood.model.dto.user.UserSignUpRequestDTO
 import br.com.senac.flashfood.model.dto.user.UserSignUpResponseDTO
 import br.com.senac.flashfood.model.entity.User
@@ -8,51 +10,55 @@ import br.com.senac.flashfood.service.UserService
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import org.modelmapper.ModelMapper
-import org.modelmapper.convention.MatchingStrategies
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.context.ApplicationContext
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
-import java.util.*
+import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.security.core.context.SecurityContextImpl
+import org.springframework.web.bind.annotation.*
+import javax.swing.Spring
 import javax.validation.Valid
 
 @RestController()
-@RequestMapping(value = ["/v1/user"])
-@Api(tags = ["/v1/user"], description = "Endpoint for users")
+@RequestMapping(value = ["/user"])
+@Api(tags = ["/user"], description = "Endpoint for users")
 class UserControllerImpl : UserController {
 
     @Autowired
-    lateinit var mapper : ModelMapper
+    private lateinit var userService : UserService
 
-    @Autowired
-    lateinit var userService : UserService
-
-    @PostMapping()
+    @PostMapping("/signup")
     @ApiOperation(
             value = "Signup",
             notes = "Responsible endpoint to signup user",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    override fun signUp(@RequestBody @Valid userDTO: UserSignUpRequestDTO)
-            : ResponseEntity<UserSignUpResponseDTO> {
+    override
+    fun signUp(@RequestBody @Valid userDTO: UserSignUpRequestDTO) = ResponseEntity(userService.save(userDTO), HttpStatus.OK);
 
-            mapper.createTypeMap(User::class.java, UserSignUpResponseDTO::class.java)
-            if(mapper.getTypeMap(User::class.java, UserSignUpResponseDTO::class.java) == null)
-                println("Teste")
-            val user = mapper.map(userDTO, User::class.java)
-            var teste = userService.save(user)
-            var responseDTO = mapper.map(teste, UserSignUpResponseDTO::class.java)
-            return ResponseEntity(responseDTO, HttpStatus.OK);
-    }
+    @PostMapping("/login")
+    @ApiOperation(
+            value = "login",
+            notes = "Responsible endpoint for return jwt token",
+            consumes = MediaType.APPLICATION_JSON_VALUE
+    )
+    override fun login() = ResponseEntity<Void>(HttpStatus.OK)
 
-    override fun login(user: Objects): ResponseEntity<String> {
-        TODO("Not yet implemented")
-    }
+    @GetMapping("/info")
+    @ApiOperation(
+            value = "find",
+            notes = "Responsible endpoint for return infos of the user",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    override fun findUser() =
+            ResponseEntity(userService.findBy(
+                    SecurityContextHolder.getContext().authentication.name),
+                    HttpStatus.OK
+            )
+
 
     override fun forgotItPassword(email: String): ResponseEntity<String> {
         TODO("Not yet implemented")
