@@ -47,8 +47,7 @@ class JWTAuthorizationFilter : GenericFilterBean {
             if (authorizationHeader != null && authorizationHeader.startsWith(JWTConstants.PREFIX.getValue())) {
                 val auth = getAuthentication(authorizationHeader)
                 SecurityContextHolder.getContext().authentication = auth
-            }
-            throw AuthenticationException()
+            } else throw AuthenticationException()
         }
         chain?.doFilter(request, response)
     }
