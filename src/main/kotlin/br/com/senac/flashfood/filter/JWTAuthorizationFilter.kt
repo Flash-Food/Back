@@ -15,6 +15,7 @@ import javax.servlet.ServletRequest
 import javax.servlet.ServletResponse
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
+import javax.xml.transform.sax.SAXSource
 
 
 class JWTAuthorizationFilter : GenericFilterBean {
@@ -40,12 +41,16 @@ class JWTAuthorizationFilter : GenericFilterBean {
 
     override fun doFilter(request: ServletRequest?, response: ServletResponse?, chain: FilterChain?) {
         val HTTP_REQ = request as HttpServletRequest
-        val authorizationHeader = HTTP_REQ.getHeader(JWTConstants.HEADER_NAME.getValue())
-        if(authorizationHeader != null && authorizationHeader.startsWith(JWTConstants.PREFIX.getValue())) {
-            val auth = getAuthentication(authorizationHeader)
-            SecurityContextHolder.getContext().authentication = auth
-            chain?.doFilter(request, response)
+        if(!HTTP_REQ.servletPath.equals("/user/login")) {
+            val authorizationHeader = HTTP_REQ.getHeader(JWTConstants.HEADER_NAME.getValue())
+            println(authorizationHeader)
+            if (authorizationHeader != null && authorizationHeader.startsWith(JWTConstants.PREFIX.getValue())) {
+                val auth = getAuthentication(authorizationHeader)
+                SecurityContextHolder.getContext().authentication = auth
+            }
+            throw AuthenticationException()
         }
-        throw AuthenticationException()
+        chain?.doFilter(request, response)
     }
+
 }
