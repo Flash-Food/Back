@@ -41,9 +41,8 @@ class JWTAuthorizationFilter : GenericFilterBean {
 
     override fun doFilter(request: ServletRequest?, response: ServletResponse?, chain: FilterChain?) {
         val HTTP_REQ = request as HttpServletRequest
-        if(!HTTP_REQ.servletPath.equals("/user/login")) {
+        if(!HTTP_REQ.servletPath.equals("/user/login") && !HTTP_REQ.servletPath.equals("/user/signup")) {
             val authorizationHeader = HTTP_REQ.getHeader(JWTConstants.HEADER_NAME.getValue())
-            println(authorizationHeader)
             if (authorizationHeader != null && authorizationHeader.startsWith(JWTConstants.PREFIX.getValue())) {
                 val auth = getAuthentication(authorizationHeader)
                 SecurityContextHolder.getContext().authentication = auth

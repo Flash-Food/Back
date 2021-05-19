@@ -39,7 +39,6 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
         http.csrf().disable()
                 .cors().disable()
                 .authorizeRequests()
-                    .antMatchers(HttpMethod.POST, "/user/signup", "/user/login").permitAll()
                     .anyRequest().authenticated()
                 .and()
                     .sessionManagement()
