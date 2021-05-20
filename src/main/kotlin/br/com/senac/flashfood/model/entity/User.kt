@@ -14,8 +14,8 @@ data class User (
         @GeneratedValue(generator = "uuid")
         @GenericGenerator(name = "uuid", strategy = "uuid2")
         var id          : UUID,
-        @Column(unique = true)
         var name        : String,
+        @Column(unique = true)
         var email       : String,
         @Column(unique = true)
         var cpf         : String,

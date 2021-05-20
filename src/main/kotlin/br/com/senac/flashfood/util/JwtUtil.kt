@@ -26,8 +26,6 @@ class JwtUtil {
     fun isTokenValid(token: String): Boolean {
         val claims = getClaimsToken(token)
         if (claims != null) {
-            println("Claims")
-            println(claims.subject)
             val username = claims.subject
             val expirationDate = claims.expiration
             val now = Date(System.currentTimeMillis())

@@ -20,6 +20,8 @@ import javax.xml.transform.sax.SAXSource
 
 class JWTAuthorizationFilter : GenericFilterBean {
 
+    private val REGEX = "(\\/user\\/login)|(\\/user\\/signup)"
+
     private var jwtUtil: JwtUtil
 
     private var userDetailService: UserDetailsService
@@ -41,7 +43,7 @@ class JWTAuthorizationFilter : GenericFilterBean {
 
     override fun doFilter(request: ServletRequest?, response: ServletResponse?, chain: FilterChain?) {
         val HTTP_REQ = request as HttpServletRequest
-        if(!HTTP_REQ.servletPath.equals("/user/login") && !HTTP_REQ.servletPath.equals("/user/signup")) {
+        if(!HTTP_REQ.servletPath.matches(Regex(REGEX))) {
             val authorizationHeader = HTTP_REQ.getHeader(JWTConstants.HEADER_NAME.getValue())
             if (authorizationHeader != null && authorizationHeader.startsWith(JWTConstants.PREFIX.getValue())) {
                 val auth = getAuthentication(authorizationHeader)
