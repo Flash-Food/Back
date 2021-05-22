@@ -1,6 +1,6 @@
 package br.com.senac.flashfood.loader
 
-import br.com.senac.flashfood.model.entity.Category
+import br.com.senac.flashfood.constant.CategoryProduct
 import br.com.senac.flashfood.model.entity.Menu
 import br.com.senac.flashfood.model.entity.Product
 import br.com.senac.flashfood.repository.ProductRepository
@@ -18,21 +18,21 @@ class ProductsDataLoader {
                 Product(
                         name = "x-salada",
                         description = "Pão, hamburguer, queijo e salada",
-                        category = Category.SALTY,
+                        category = CategoryProduct.SALTY,
                         price = 10.00,
                         menu = menu
                 ),
                 Product(
                         name = "Brigadeiro",
                         description = "Brigadeiro artesanal",
-                        category = Category.CANDY,
+                        category = CategoryProduct.CANDY,
                         price = 2.00,
                         menu = menu
                 ),
                 Product(
                         name = "Coca Cola",
                         description = "Refrigerante de 200ml",
-                        category = Category.DRINK,
+                        category = CategoryProduct.DRINK,
                         price = 5.00,
                         menu = menu
                 )

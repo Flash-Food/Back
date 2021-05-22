@@ -1,6 +1,6 @@
 package br.com.senac.flashfood.model.entity
 
-import br.com.senac.flashfood.annotations.NoArgs
+import br.com.senac.flashfood.constant.CategoryProduct
 import lombok.AllArgsConstructor
 import org.hibernate.annotations.GenericGenerator
 import java.util.*
@@ -26,7 +26,7 @@ data class Product (
 
         @Enumerated(EnumType.STRING)
         @Column(nullable = false)
-        var category: Category,
+        var category: CategoryProduct,
 
         @ManyToOne
         @JoinColumn(name = "menu_id", nullable = false)

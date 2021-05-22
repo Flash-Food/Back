@@ -17,7 +17,7 @@ data class Menu (
         var id          : UUID? = null,
 
         @OneToMany(mappedBy = "menu", cascade = [CascadeType.ALL])
-        var productList: List<Product>? = null,
+        var productsList: List<Product>? = null,
 
         @OneToOne
         @JoinColumn(name = "restaurant_id", nullable = false)
