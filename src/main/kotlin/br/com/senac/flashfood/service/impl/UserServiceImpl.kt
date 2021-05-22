@@ -1,5 +1,6 @@
 package br.com.senac.flashfood.service.impl
 
+import br.com.senac.flashfood.context.RolesContext
 import br.com.senac.flashfood.model.dto.user.UserFindRequestDTO
 import br.com.senac.flashfood.model.dto.user.UserFindResponseDTO
 import br.com.senac.flashfood.model.dto.user.UserSignUpRequestDTO
@@ -28,6 +29,7 @@ class UserServiceImpl : UserService {
     override fun save(request: UserSignUpRequestDTO) : UserSignUpResponseDTO {
         val user = mapper.map(request, User::class.java)
         user.password = bCryptPasswordEncoder.encode(user.password)
+        user.roles = arrayListOf(RolesContext.roleUser)
         return mapper.map(userRepository.save(user), UserSignUpResponseDTO::class.java)
     }
 

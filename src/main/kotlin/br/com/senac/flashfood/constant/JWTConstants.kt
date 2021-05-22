@@ -4,7 +4,8 @@ package br.com.senac.flashfood.constant
 
 enum class JWTConstants(value: String) {
     HEADER_NAME("authorization"),
-    PREFIX("Bearer");
+    PREFIX("Bearer"),
+    AUTHORITIES("authorities");
 
 
     private val value = value

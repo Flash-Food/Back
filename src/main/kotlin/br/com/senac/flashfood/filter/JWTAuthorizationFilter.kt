@@ -2,6 +2,7 @@ package br.com.senac.flashfood.filter
 
 import br.com.senac.flashfood.constant.JWTConstants
 import br.com.senac.flashfood.util.JwtUtil
+import org.springframework.orm.hibernate5.SpringSessionContext
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder
@@ -9,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter
 import org.springframework.web.filter.GenericFilterBean
+import java.util.regex.Pattern
 import javax.naming.AuthenticationException
 import javax.servlet.FilterChain
 import javax.servlet.ServletRequest
@@ -20,7 +22,7 @@ import javax.xml.transform.sax.SAXSource
 
 class JWTAuthorizationFilter : GenericFilterBean {
 
-    private val REGEX = "(\\/user\\/login)|(\\/user\\/signup)"
+    private val REGEX =  "/user/login|/user/signup|/error".toRegex()
 
     private var jwtUtil: JwtUtil
 
@@ -43,7 +45,7 @@ class JWTAuthorizationFilter : GenericFilterBean {
 
     override fun doFilter(request: ServletRequest?, response: ServletResponse?, chain: FilterChain?) {
         val HTTP_REQ = request as HttpServletRequest
-        if(!HTTP_REQ.servletPath.matches(Regex(REGEX))) {
+        if(!REGEX.matches(HTTP_REQ.servletPath)) {
             val authorizationHeader = HTTP_REQ.getHeader(JWTConstants.HEADER_NAME.getValue())
             if (authorizationHeader != null && authorizationHeader.startsWith(JWTConstants.PREFIX.getValue())) {
                 val auth = getAuthentication(authorizationHeader)

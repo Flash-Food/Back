@@ -21,6 +21,7 @@ class FilterChainExceptionHandler : OncePerRequestFilter() {
         try {
             chain.doFilter(request, response)
         } catch (e: Exception) {
+            e.printStackTrace()
             resolver.resolveException(request, response, null, e)
         }
     }

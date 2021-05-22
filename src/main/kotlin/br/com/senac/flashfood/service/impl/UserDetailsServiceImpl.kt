@@ -2,6 +2,7 @@ package br.com.senac.flashfood.service.impl
 
 import br.com.senac.flashfood.model.internal.UserDetailsImpl
 import br.com.senac.flashfood.repository.UserRepository
+import javassist.NotFoundException
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
@@ -13,6 +14,8 @@ class UserDetailsServiceImpl : UserDetailsService {
     @Autowired
     private lateinit var userRepository: UserRepository
 
-    override fun loadUserByUsername(email: String?) = UserDetailsImpl(userRepository.findByEmail(email))
+    override fun loadUserByUsername(email: String?) = UserDetailsImpl(
+            userRepository.findByEmail(email)?: throw NotFoundException("User not found"))
+
 
 }

@@ -10,15 +10,37 @@ import javax.persistence.*
 @Table(name = "users")
 @AllArgsConstructor
 data class User (
+
         @Id
         @GeneratedValue(generator = "uuid")
         @GenericGenerator(name = "uuid", strategy = "uuid2")
-        var id          : UUID,
+        var id          : UUID? = null,
+
+        @Column(nullable = false)
         var name        : String,
-        @Column(unique = true)
+
+        @Column(nullable = false, unique = true)
         var email       : String,
-        @Column(unique = true)
+
+        @Column(nullable = false, unique = true)
         var cpf         : String,
+
+        @Column(nullable = false)
         var phoneNumber : String,
-        var password    : String
+
+        @Column(nullable = false)
+        var password    : String,
+
+        @ManyToMany(fetch = FetchType.EAGER)
+        @JoinTable(name = "users_roles",
+                joinColumns = [JoinColumn(
+                        name = "user_id", referencedColumnName = "id")],
+                inverseJoinColumns = [JoinColumn(
+                        name = "role_id", referencedColumnName = "id")])
+        var roles       : Collection<Role>,
+
+
+        @OneToMany(mappedBy = "user", cascade = [CascadeType.ALL])
+        var restaurants : List<Restaurant>? = null
+
 )

@@ -29,7 +29,7 @@ class JWTAuthenticationFilter: AbstractAuthenticationProcessingFilter {
 
     override fun successfulAuthentication(request: HttpServletRequest?, response: HttpServletResponse?, chain: FilterChain?, authResult: Authentication?) {
         authResult?.let {
-            var TOKEN = jwtUtil.generateToken(it.name)
+            var TOKEN = jwtUtil.generateToken(it.name, it.authorities.toList())
             TOKEN = "${JWTConstants.PREFIX.getValue()} $TOKEN"
             response?.addHeader(JWTConstants.HEADER_NAME.getValue(), TOKEN)
         }
