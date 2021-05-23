@@ -4,6 +4,7 @@ import br.com.senac.flashfood.filter.JWTAuthenticationFilter
 import br.com.senac.flashfood.filter.JWTAuthorizationFilter
 import br.com.senac.flashfood.handler.FilterChainExceptionHandler
 import br.com.senac.flashfood.util.JwtUtil
+import br.com.senac.flashfood.util.UserUtils
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
@@ -40,6 +41,9 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
     @Autowired
     private lateinit var filterChainExceptionHandler: FilterChainExceptionHandler
 
+    @Autowired
+    private lateinit var userUtil: UserUtils
+
     override fun configure(http: HttpSecurity) {
         http.csrf().disable()
                 .cors().disable()
@@ -57,10 +61,10 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
                             filterChainExceptionHandler,
                             LogoutFilter::class.java)
                     .addFilterBefore(
-                            JWTAuthenticationFilter("/user/login", auth = authenticationManager(), jwtUtil = jwtUtil),
+                            JWTAuthenticationFilter("/user/login", auth = authenticationManager(), jwtUtil = jwtUtil, userUtils = userUtil),
                             UsernamePasswordAuthenticationFilter::class.java)
                     .addFilterBefore(
-                            JWTAuthorizationFilter(authenticationManager(), jwtUtil = jwtUtil, userDetailService = userDetailsService),
+                            JWTAuthorizationFilter(jwtUtil = jwtUtil, userDetailService = userDetailsService, userUtils = userUtil),
                             UsernamePasswordAuthenticationFilter::class.java
                     )
                 }

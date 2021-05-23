@@ -1,6 +1,7 @@
 package br.com.senac.flashfood.model.entity
 
 import lombok.AllArgsConstructor
+import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.GenericGenerator
 import java.util.*
 import javax.persistence.*
@@ -41,6 +42,7 @@ data class User (
 
 
         @OneToMany(mappedBy = "user", cascade = [CascadeType.ALL])
-        var restaurants : List<Restaurant>? = null
+        var restaurants : List<Restaurant>? = null,
 
+        var dateAccess  : Date? = null
 )

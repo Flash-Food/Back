@@ -2,8 +2,12 @@ package br.com.senac.flashfood.filter
 
 import br.com.senac.flashfood.constant.JWTConstants
 import br.com.senac.flashfood.model.internal.Credentials
+import br.com.senac.flashfood.service.UserService
+import br.com.senac.flashfood.service.impl.UserServiceImpl
 import br.com.senac.flashfood.util.JwtUtil
+import br.com.senac.flashfood.util.UserUtils
 import com.fasterxml.jackson.databind.ObjectMapper
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
@@ -16,9 +20,12 @@ class JWTAuthenticationFilter: AbstractAuthenticationProcessingFilter {
 
     private val jwtUtil : JwtUtil
 
-    constructor(url: String, auth: AuthenticationManager, jwtUtil: JwtUtil) : super(url) {
+    private val userUtils: UserUtils
+
+    constructor(url: String, auth: AuthenticationManager, jwtUtil: JwtUtil, userUtils: UserUtils) : super(url) {
         authenticationManager = auth
         this.jwtUtil = jwtUtil
+        this.userUtils = userUtils
     }
 
     override fun attemptAuthentication(request: HttpServletRequest?, response: HttpServletResponse?): Authentication {
@@ -29,9 +36,10 @@ class JWTAuthenticationFilter: AbstractAuthenticationProcessingFilter {
 
     override fun successfulAuthentication(request: HttpServletRequest?, response: HttpServletResponse?, chain: FilterChain?, authResult: Authentication?) {
         authResult?.let {
-            var TOKEN = jwtUtil.generateToken(it.name, it.authorities.toList())
-            TOKEN = "${JWTConstants.PREFIX.getValue()} $TOKEN"
-            response?.addHeader(JWTConstants.HEADER_NAME.getValue(), TOKEN)
+            var token = jwtUtil.generateToken(it.name, it.authorities.toList())
+            token = "${JWTConstants.PREFIX.getValue()} $token"
+            response?.addHeader(JWTConstants.HEADER_NAME.getValue(), token)
+            userUtils.updateFinalAccess(it.name)
         }
         chain?.doFilter(request, response)
     }
