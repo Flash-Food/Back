@@ -7,7 +7,6 @@ import org.springframework.context.ApplicationListener
 import org.springframework.context.event.ContextRefreshedEvent
 import org.springframework.core.Ordered
 import org.springframework.stereotype.Component
-import javax.transaction.Transactional
 
 @Component
 class RestaurantsDataLoader : ApplicationListener<ContextRefreshedEvent>, Ordered {
@@ -28,7 +27,9 @@ class RestaurantsDataLoader : ApplicationListener<ContextRefreshedEvent>, Ordere
 
     override fun onApplicationEvent(event: ContextRefreshedEvent) {
         if (finish) return
-        createRestaurantIfNotFound(createBrotinos())
+        createRestaurantBrotinos(createBrotinos())
+        createRestaurantVictorinos(createVictorinos())
+        createRestaurantDogaoHouse(createDogaoHouse())
         finish = true
     }
 
@@ -38,13 +39,37 @@ class RestaurantsDataLoader : ApplicationListener<ContextRefreshedEvent>, Ordere
         user = userRestaurantsDataLoader.createUserBrotinos()
         )
 
-    fun createRestaurantIfNotFound(restaurant: Restaurant) = restaurantRepository.findByName(restaurant.name)
-            ?: productsDataLoader.createProductsForBrotinos(
-                    menusDataLoader.createMenuForBrotinos(
-                            saveRestaurant(restaurant)
-                    )
-            )
+    fun createVictorinos() = Restaurant(name = "Victorinos",
+            phoneNumber = "11 96361-1012",
+            description = "Lanchonete localizada na P1",
+            user = userRestaurantsDataLoader.createUserVictorinos()
+    )
 
+    fun createDogaoHouse() = Restaurant(name = "Dogão House",
+            phoneNumber = "11 96321-1111",
+            description = "Lanchonete especializada em dogao, localizada na P2",
+            user = userRestaurantsDataLoader.createUserDogaoHouse()
+    )
+
+
+    fun createRestaurantBrotinos(restaurant: Restaurant) =
+        restaurantRepository.findByName(restaurant.name)?:
+            productsDataLoader.createProductsForBrotinos(
+                    menusDataLoader.createMenuForRestaurant(
+                            saveRestaurant(restaurant)))
+
+
+    fun createRestaurantVictorinos(restaurant: Restaurant) =
+            restaurantRepository.findByName(restaurant.name)?:
+            productsDataLoader.createProductsForVictorinos(
+                    menusDataLoader.createMenuForRestaurant(
+                            saveRestaurant(restaurant)))
+
+    fun createRestaurantDogaoHouse(restaurant: Restaurant) =
+            restaurantRepository.findByName(restaurant.name)?:
+            productsDataLoader.createProductsForDogaoHouse(
+                    menusDataLoader.createMenuForRestaurant(
+                            saveRestaurant(restaurant)))
 
     fun saveRestaurant(restaurant: Restaurant) = restaurantRepository.save(restaurant)
 

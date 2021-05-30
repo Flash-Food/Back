@@ -40,6 +40,68 @@ class ProductsDataLoader {
     )
 
 
+    fun createProductsForVictorinos(menu: Menu)  = saveProducts (
+            arrayListOf(
+                    Product(
+                            name = "Empadinha",
+                            description = "Massa artesanal, com recheio de frango",
+                            category = CategoryProduct.SALTY,
+                            price = 3.00,
+                            menu = menu
+                    ),
+                    Product(
+                            name = "Pão de mel",
+                            description = "Pão de mel com recheio de doce de leite",
+                            category = CategoryProduct.CANDY,
+                            price = 3.00,
+                            menu = menu
+                    ),
+                    Product(
+                            name = "Água",
+                            description = "Água de 200ml",
+                            category = CategoryProduct.DRINK,
+                            price = 3.00,
+                            menu = menu
+                    )
+            )
+    )
+
+    fun createProductsForDogaoHouse(menu: Menu)  = saveProducts (
+            arrayListOf(
+                    Product(
+                            name = "Dogao trad",
+                            description = "Pão de hotdog, salsicha e batata palha.",
+                            category = CategoryProduct.SALTY,
+                            price = 5.00,
+                            menu = menu
+                    ),
+                    Product(
+                            name = "Dogao Moster",
+                            description = "Pão de hotdog, três salsichas, pure, bacon," +
+                                    "presunto, queijo e batata palha.",
+                            category = CategoryProduct.SALTY,
+                            price = 12.00,
+                            menu = menu
+                    ),
+                    Product(
+                            name = "Canudos de chocolate",
+                            description = "5 canudos de chocolate belga",
+                            category = CategoryProduct.CANDY,
+                            price = 5.00,
+                            menu = menu
+                    ),
+                    Product(
+                            name = "Chá",
+                            description = "Chá de 200ml",
+                            category = CategoryProduct.DRINK,
+                            price = 3.00,
+                            menu = menu
+                    )
+            )
+    )
+
+
+
     private fun saveProducts(products: List<Product>) = products.forEach{
         productRepository.save(it)
     }

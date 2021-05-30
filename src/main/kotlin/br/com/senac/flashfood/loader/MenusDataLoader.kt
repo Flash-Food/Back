@@ -13,7 +13,7 @@ class MenusDataLoader {
     @Autowired
     private lateinit var menuRepository: MenuRepository
 
-    fun createMenuForBrotinos(restaurant: Restaurant) = saveMenu(Menu(restaurant = restaurant))
+    fun createMenuForRestaurant(restaurant: Restaurant) = saveMenu(Menu(restaurant = restaurant))
 
     private fun saveMenu(menu: Menu) = menuRepository.save(menu)
 

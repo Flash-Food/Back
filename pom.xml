@@ -22,6 +22,7 @@
 		<springfox.boot.version>3.0.0</springfox.boot.version>
 		<springfox.swagger.ui.version>2.9.2</springfox.swagger.ui.version>
 		<modelMapper.version>2.4.2</modelMapper.version>
+		<hibernate.version>5.4.30.Final</hibernate.version>
 	</properties>
 
 	<dependencies>
@@ -189,6 +190,21 @@
 						<version>${kotlin.version}</version>
 					</dependency>
 				</dependencies>
+			</plugin>
+			<plugin>
+				<groupId>org.hibernate.orm.tooling</groupId>
+				<artifactId>hibernate-enhance-maven-plugin</artifactId>
+				<version>${hibernate.version}</version>
+				<executions>
+					<execution>
+						<configuration>
+							<enableLazyInitialization>true</enableLazyInitialization>
+						</configuration>
+						<goals>
+							<goal>enhance</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

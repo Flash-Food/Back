@@ -60,7 +60,6 @@ class JWTAuthorizationFilter : GenericFilterBean {
     }
 
     fun createNewToken(username: String, authoritis: Collection<GrantedAuthority>, response: ServletResponse?) {
-        println("CRINADO TOKEN")
         val response = response as HttpServletResponse
         var token = jwtUtil.generateToken(username, authoritis.toList())
         token = "${JWTConstants.PREFIX.getValue()} $token"

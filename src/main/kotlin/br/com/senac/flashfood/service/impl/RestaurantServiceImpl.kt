@@ -2,8 +2,10 @@ package br.com.senac.flashfood.service.impl
 
 import br.com.senac.flashfood.context.RolesContext
 import br.com.senac.flashfood.model.dto.restaurant.RestaurantResponseDTO
+import br.com.senac.flashfood.model.dto.restaurant.RestaurantWithMenuResponseDTO
 import br.com.senac.flashfood.model.dto.user.UserSignUpRequestDTO
 import br.com.senac.flashfood.model.dto.user.UserSignUpResponseDTO
+import br.com.senac.flashfood.model.entity.Restaurant
 import br.com.senac.flashfood.model.entity.User
 import br.com.senac.flashfood.repository.RestaurantRepository
 import br.com.senac.flashfood.repository.UserRepository
@@ -12,15 +14,17 @@ import org.modelmapper.ModelMapper
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
+import java.util.*
 import java.util.stream.Collectors
+import javax.persistence.Transient
 
 @Service
 class RestaurantServiceImpl : RestaurantService {
 
-    @Autowired
+    @Transient @Autowired
     private lateinit var restaurantRepository: RestaurantRepository
 
-    @Autowired
+    @Transient @Autowired
     private lateinit var userRepository: UserRepository
 
     @Autowired
@@ -36,13 +40,15 @@ class RestaurantServiceImpl : RestaurantService {
         return mapper.map(userRepository.save(user), UserSignUpResponseDTO::class.java)
     }
 
-    override fun update() {
-        TODO("Not yet implemented")
-    }
-
     override fun getAll() = restaurantRepository.findAll()
             .stream()
             .map { mapper.map(it, RestaurantResponseDTO::class.java) }
             .collect(Collectors.toList())
+
+    override fun getById(id: UUID): RestaurantWithMenuResponseDTO {
+        val RESTAURANT = restaurantRepository.findById(id).get()
+        RESTAURANT.menu?.productsList
+        return mapper.map(RESTAURANT, RestaurantWithMenuResponseDTO::class.java)
+    }
 
 }
