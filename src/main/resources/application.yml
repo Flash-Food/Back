@@ -20,6 +20,8 @@ spring:
     properties:
       hibernate:
         dialect: ${hibernateDialect}
+        ejb:
+          use_class_enhancer: true
     show-sql: true
 
 server:
