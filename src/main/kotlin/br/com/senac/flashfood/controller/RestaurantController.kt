@@ -15,4 +15,6 @@ interface RestaurantController {
 
     fun getById(id: UUID): ResponseEntity<RestaurantWithMenuResponseDTO>
 
+    fun getByProduct(id: UUID): ResponseEntity<RestaurantResponseDTO>
+
 }

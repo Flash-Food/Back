@@ -51,6 +51,8 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
                     .antMatchers(HttpMethod.POST,"/user/login", "/user/signup").permitAll()
                     .antMatchers("/user/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
                     .antMatchers("/restaurant**").hasAnyAuthority("ROLE_USER", "ROLE_RESTAURANT", "ROLE_ADMIN")
+                    .antMatchers("/product**").hasAnyAuthority("ROLE_USER", "ROLE_RESTAURANT", "ROLE_ADMIN")
+                    .antMatchers("/purchase**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
                     .antMatchers("/restaurant/signup").hasAuthority("ROLE_ADMIN")
                     .anyRequest().authenticated()
                 .and()

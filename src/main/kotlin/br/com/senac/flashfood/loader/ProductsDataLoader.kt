@@ -1,6 +1,6 @@
 package br.com.senac.flashfood.loader
 
-import br.com.senac.flashfood.constant.CategoryProduct
+import br.com.senac.flashfood.constant.CategoryProductConstants
 import br.com.senac.flashfood.model.entity.Menu
 import br.com.senac.flashfood.model.entity.Product
 import br.com.senac.flashfood.repository.ProductRepository
@@ -18,21 +18,21 @@ class ProductsDataLoader {
                 Product(
                         name = "x-salada",
                         description = "Pão, hamburguer, queijo e salada",
-                        category = CategoryProduct.SALTY,
+                        category = CategoryProductConstants.SALTY,
                         price = 10.00,
                         menu = menu
                 ),
                 Product(
                         name = "Brigadeiro",
                         description = "Brigadeiro artesanal",
-                        category = CategoryProduct.CANDY,
+                        category = CategoryProductConstants.CANDY,
                         price = 2.00,
                         menu = menu
                 ),
                 Product(
                         name = "Coca Cola",
                         description = "Refrigerante de 200ml",
-                        category = CategoryProduct.DRINK,
+                        category = CategoryProductConstants.DRINK,
                         price = 5.00,
                         menu = menu
                 )
@@ -45,21 +45,21 @@ class ProductsDataLoader {
                     Product(
                             name = "Empadinha",
                             description = "Massa artesanal, com recheio de frango",
-                            category = CategoryProduct.SALTY,
+                            category = CategoryProductConstants.SALTY,
                             price = 3.00,
                             menu = menu
                     ),
                     Product(
                             name = "Pão de mel",
                             description = "Pão de mel com recheio de doce de leite",
-                            category = CategoryProduct.CANDY,
+                            category = CategoryProductConstants.CANDY,
                             price = 3.00,
                             menu = menu
                     ),
                     Product(
                             name = "Água",
                             description = "Água de 200ml",
-                            category = CategoryProduct.DRINK,
+                            category = CategoryProductConstants.DRINK,
                             price = 3.00,
                             menu = menu
                     )
@@ -71,7 +71,7 @@ class ProductsDataLoader {
                     Product(
                             name = "Dogao trad",
                             description = "Pão de hotdog, salsicha e batata palha.",
-                            category = CategoryProduct.SALTY,
+                            category = CategoryProductConstants.SALTY,
                             price = 5.00,
                             menu = menu
                     ),
@@ -79,21 +79,21 @@ class ProductsDataLoader {
                             name = "Dogao Moster",
                             description = "Pão de hotdog, três salsichas, pure, bacon," +
                                     "presunto, queijo e batata palha.",
-                            category = CategoryProduct.SALTY,
+                            category = CategoryProductConstants.SALTY,
                             price = 12.00,
                             menu = menu
                     ),
                     Product(
                             name = "Canudos de chocolate",
                             description = "5 canudos de chocolate belga",
-                            category = CategoryProduct.CANDY,
+                            category = CategoryProductConstants.CANDY,
                             price = 5.00,
                             menu = menu
                     ),
                     Product(
                             name = "Chá",
                             description = "Chá de 200ml",
-                            category = CategoryProduct.DRINK,
+                            category = CategoryProductConstants.DRINK,
                             price = 3.00,
                             menu = menu
                     )

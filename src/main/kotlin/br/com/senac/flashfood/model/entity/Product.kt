@@ -1,6 +1,6 @@
 package br.com.senac.flashfood.model.entity
 
-import br.com.senac.flashfood.constant.CategoryProduct
+import br.com.senac.flashfood.constant.CategoryProductConstants
 import lombok.AllArgsConstructor
 import org.hibernate.annotations.GenericGenerator
 import java.util.*
@@ -26,9 +26,12 @@ data class Product (
 
         @Enumerated(EnumType.STRING)
         @Column(nullable = false)
-        var category: CategoryProduct,
+        var category: CategoryProductConstants,
 
         @ManyToOne
         @JoinColumn(name = "menu_id", nullable = false)
-        var menu: Menu
+        var menu: Menu,
+
+        @ManyToMany(mappedBy = "products")
+        var purchase: List<Purchase>? = null
 )

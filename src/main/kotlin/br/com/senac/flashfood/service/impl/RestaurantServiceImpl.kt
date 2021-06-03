@@ -7,6 +7,7 @@ import br.com.senac.flashfood.model.dto.user.UserSignUpRequestDTO
 import br.com.senac.flashfood.model.dto.user.UserSignUpResponseDTO
 import br.com.senac.flashfood.model.entity.Restaurant
 import br.com.senac.flashfood.model.entity.User
+import br.com.senac.flashfood.repository.ProductRepository
 import br.com.senac.flashfood.repository.RestaurantRepository
 import br.com.senac.flashfood.repository.UserRepository
 import br.com.senac.flashfood.service.RestaurantService
@@ -23,6 +24,9 @@ class RestaurantServiceImpl : RestaurantService {
 
     @Transient @Autowired
     private lateinit var restaurantRepository: RestaurantRepository
+
+    @Transient @Autowired
+    private lateinit var productRepository: ProductRepository
 
     @Transient @Autowired
     private lateinit var userRepository: UserRepository
@@ -49,6 +53,14 @@ class RestaurantServiceImpl : RestaurantService {
         val RESTAURANT = restaurantRepository.findById(id).get()
         RESTAURANT.menu?.productsList
         return mapper.map(RESTAURANT, RestaurantWithMenuResponseDTO::class.java)
+    }
+
+    override fun getByProduct(id: UUID): RestaurantResponseDTO {
+        var product = productRepository.findById(id).get()
+
+        var restaurant = product.menu.restaurant
+
+        return mapper.map(restaurant, RestaurantResponseDTO::class.java)
     }
 
 }

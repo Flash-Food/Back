@@ -1,6 +1,7 @@
 package br.com.senac.flashfood.controller.impl
 
 import br.com.senac.flashfood.controller.RestaurantController
+import br.com.senac.flashfood.model.dto.restaurant.RestaurantResponseDTO
 import br.com.senac.flashfood.model.dto.user.UserSignUpRequestDTO
 import br.com.senac.flashfood.model.dto.user.UserSignUpResponseDTO
 import br.com.senac.flashfood.service.RestaurantService
@@ -52,6 +53,19 @@ class RestaurantControllerImpl : RestaurantController {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     override fun getById(@PathVariable ID: UUID) = ResponseEntity(restaurantService.getById(ID), HttpStatus.OK)
+
+
+    @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_RESTAURANT', 'ROLE_ADMIN')")
+    @GetMapping("/product/{ID}")
+    @ApiOperation(
+            value = "/{ID}",
+            notes = "Responsible endpoint to get restaurant by product id",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    override fun getByProduct(@PathVariable ID: UUID) = ResponseEntity(
+            restaurantService.getByProduct(ID),
+            HttpStatus.OK
+    )
 
 
 }

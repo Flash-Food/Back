@@ -1,5 +1,6 @@
 package br.com.senac.flashfood.service
 
+import br.com.senac.flashfood.model.dto.purchase.PurchaseResponseDTO
 import br.com.senac.flashfood.model.dto.user.UserFindRequestDTO
 import br.com.senac.flashfood.model.dto.user.UserFindResponseDTO
 import br.com.senac.flashfood.model.dto.user.UserSignUpRequestDTO
@@ -12,9 +13,5 @@ interface UserService {
 
     fun findBy(username : String) : UserFindResponseDTO
 
-    fun update()
-
-    fun updatePassword()
-
-    fun createOrder()
+    fun getPurchases(username: String) : List<PurchaseResponseDTO>
 }

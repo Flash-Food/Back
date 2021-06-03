@@ -17,7 +17,7 @@ class JwtUtil {
     @Value("\${jwt.secret}")
     private lateinit var secret: String
 
-    private val expiration: Long = 3600000
+    private val expiration: Long = 36000000000000000
 
     private val TIME_TORELANCE = 5
 

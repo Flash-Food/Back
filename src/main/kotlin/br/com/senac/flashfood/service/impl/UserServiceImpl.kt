@@ -1,6 +1,7 @@
 package br.com.senac.flashfood.service.impl
 
 import br.com.senac.flashfood.context.RolesContext
+import br.com.senac.flashfood.model.dto.purchase.PurchaseResponseDTO
 import br.com.senac.flashfood.model.dto.user.UserFindRequestDTO
 import br.com.senac.flashfood.model.dto.user.UserFindResponseDTO
 import br.com.senac.flashfood.model.dto.user.UserSignUpRequestDTO
@@ -14,6 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Repository
 import org.springframework.stereotype.Service
 import java.util.*
+import kotlin.collections.ArrayList
 
 @Service
 class UserServiceImpl : UserService {
@@ -39,16 +41,14 @@ class UserServiceImpl : UserService {
        return mapper.map(user, UserFindResponseDTO::class.java)
     }
 
-    override fun update() {
-        TODO("Not yet implemented")
-    }
+    override fun getPurchases(username: String): List<PurchaseResponseDTO> {
+        val USER = userRepository.findByEmail(username)
 
-    override fun updatePassword() {
-        TODO("Not yet implemented")
-    }
+        val PURCHASES = USER?.purchaseList ?: return ArrayList()
 
-    override fun createOrder() {
-        TODO("Not yet implemented")
+        return PURCHASES.map {
+            mapper.map(it, PurchaseResponseDTO::class.java)
+        }
     }
 
 }

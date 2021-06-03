@@ -34,5 +34,8 @@ data class Restaurant (
 
         @ManyToOne(fetch = FetchType.LAZY, optional = true)
         @JoinColumn(name = "user_id", nullable = false)
-        var user: User?
+        var user: User?,
+
+        @OneToMany(mappedBy = "restaurant", cascade = [CascadeType.ALL])
+        var purchase: List<Purchase>? = null
 )

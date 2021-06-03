@@ -44,5 +44,8 @@ data class User (
         @OneToMany(mappedBy = "user", cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
         var restaurants : List<Restaurant>? = null,
 
-        var dateAccess  : Date? = null
+        var dateAccess  : Date? = null,
+
+        @OneToMany(mappedBy = "client", cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
+        var purchaseList : List<Purchase>? = null
 )

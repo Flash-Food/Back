@@ -1,6 +1,7 @@
 package br.com.senac.flashfood.controller.impl
 
 import br.com.senac.flashfood.controller.UserController
+import br.com.senac.flashfood.model.dto.purchase.PurchaseResponseDTO
 import br.com.senac.flashfood.model.dto.user.UserFindRequestDTO
 import br.com.senac.flashfood.model.dto.user.UserFindResponseDTO
 import br.com.senac.flashfood.model.dto.user.UserSignUpRequestDTO
@@ -63,16 +64,17 @@ class UserControllerImpl : UserController {
                     HttpStatus.OK
             )
 
+    @PreAuthorize(value = "hasAnyAuthority('ROLE_USER','ROLE_ADMIN')")
+    @GetMapping("/purchase")
+    @ApiOperation(
+            value = "purchases",
+            notes = "Responsible endpoint for return purchases of the user",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    override fun getPurchases() = ResponseEntity(
+            userService.getPurchases(
+                    SecurityContextHolder.getContext().authentication.name),
+            HttpStatus.OK
+    )
 
-    override fun forgotItPassword(email: String): ResponseEntity<String> {
-        TODO("Not yet implemented")
-    }
-
-    override fun alterPassword(email: String, OldPassword: String, NewPassword: String): ResponseEntity<String> {
-        TODO("Not yet implemented")
-    }
-
-    override fun order(list: List<String>): ResponseEntity<String> {
-        TODO("Not yet implemented")
-    }
 }

@@ -1,5 +1,6 @@
 package br.com.senac.flashfood.controller
 
+import br.com.senac.flashfood.model.dto.purchase.PurchaseResponseDTO
 import br.com.senac.flashfood.model.dto.user.UserFindRequestDTO
 import br.com.senac.flashfood.model.dto.user.UserFindResponseDTO
 import br.com.senac.flashfood.model.dto.user.UserSignUpRequestDTO
@@ -14,9 +15,5 @@ interface UserController {
 
     fun findUser()                              : ResponseEntity<UserFindResponseDTO>
 
-    fun forgotItPassword(email : String)                            : ResponseEntity<String>
-
-    fun alterPassword(email : String, OldPassword : String, NewPassword : String) : ResponseEntity<String>
-
-    fun order (list : List<String>) : ResponseEntity<String>
+    fun getPurchases()                          : ResponseEntity<List<PurchaseResponseDTO>>
 }

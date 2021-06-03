@@ -13,4 +13,6 @@ interface RestaurantService {
     fun getAll() : List<RestaurantResponseDTO>
 
     fun getById(id: UUID) : RestaurantWithMenuResponseDTO
+
+    fun getByProduct(id: UUID): RestaurantResponseDTO
 }
