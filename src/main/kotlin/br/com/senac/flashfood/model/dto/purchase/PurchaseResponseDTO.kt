@@ -8,7 +8,7 @@ import java.util.*
 
 @NoArgs
 data class PurchaseResponseDTO (
-        var purchaseCod: UUID,
+        var codPurchase: UUID,
         var restaurant: RestaurantResponseDTO,
         var purchaseDate: Date,
         var totalValue: Double,

@@ -2,6 +2,7 @@ package br.com.senac.flashfood.controller.impl
 
 import br.com.senac.flashfood.controller.PurchaseController
 import br.com.senac.flashfood.model.dto.purchase.PurchaseRequestDTO
+import br.com.senac.flashfood.model.dto.restaurant.ProductResponseDTO
 import br.com.senac.flashfood.service.PurchaseService
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
@@ -11,10 +12,8 @@ import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.context.SecurityContextHolder
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
+import java.util.*
 import javax.validation.Valid
 
 
@@ -37,10 +36,15 @@ class PurchaseControllerImpl: PurchaseController {
             ResponseEntity(purchaseService.save (requestDTO,
                             SecurityContextHolder.getContext().authentication.name), HttpStatus.OK)
 
-
-
-
-
-
-
+    @PreAuthorize("hasAnyAuthority('ROLE_USER','ROLE_ADMIN')")
+    @GetMapping("/{COD}")
+    @ApiOperation(
+            value = "",
+            notes = "Responsible endpoint to get list products of the purchase",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    override fun getProducts(@PathVariable COD: UUID) = ResponseEntity(
+            purchaseService.getProducts(COD),
+            HttpStatus.OK
+    )
 }

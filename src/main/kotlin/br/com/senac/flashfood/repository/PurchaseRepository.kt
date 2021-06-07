@@ -7,4 +7,7 @@ import java.util.*
 
 @Repository
 interface PurchaseRepository: JpaRepository<Purchase, UUID> {
+
+
+    fun getByCodPurchase(cod: UUID): Purchase
 }

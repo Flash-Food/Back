@@ -1,6 +1,7 @@
 package br.com.senac.flashfood.service.impl
 
 import br.com.senac.flashfood.model.dto.purchase.PurchaseRequestDTO
+import br.com.senac.flashfood.model.dto.restaurant.ProductResponseDTO
 import br.com.senac.flashfood.model.entity.Product
 import br.com.senac.flashfood.model.entity.Purchase
 import br.com.senac.flashfood.repository.ProductRepository
@@ -57,5 +58,7 @@ class PurchaseServiceImpl : PurchaseService {
         return PURCHASE.codPurchase!!
     }
 
+    override fun getProducts(cod: UUID) = purchaseRepository.getByCodPurchase(cod)
+            .products.map { mapper.map(it, ProductResponseDTO::class.java) }
 
 }
