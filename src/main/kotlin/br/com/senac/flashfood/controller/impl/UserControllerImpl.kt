@@ -40,7 +40,7 @@ class UserControllerImpl : UserController {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     override
-    fun signUp(@RequestBody @Valid userDTO: UserSignUpRequestDTO) = ResponseEntity(userService.save(userDTO), HttpStatus.OK);
+    fun signUp(@Valid @RequestBody userDTO: UserSignUpRequestDTO) = ResponseEntity(userService.save(userDTO), HttpStatus.OK);
 
     @PostMapping("/login")
     @ApiOperation(
